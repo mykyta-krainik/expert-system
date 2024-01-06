@@ -1,0 +1,544 @@
+{
+  "question": "Choose an investment strategy",
+  "inputType": "selection",
+  "options": [
+    "RiskTolerance",
+    "GoalOriented",
+    "MarketTrend"
+  ],
+  "strategies": {
+    "RiskTolerance": {
+      "initialQuestion": {
+        "question": "Are you comfortable with high-risk investments?",
+        "inputType": "boolean",
+        "next": {
+          "yes": "tolerateLosses",
+          "no": "preserveCapital"
+        },
+        "relevanceAdjustment": {
+          "yes": {
+            "HighRisk": 0.2
+          },
+          "no": {
+            "LowRisk": 0.2
+          }
+        }
+      },
+      "questions": {
+        "tolerateLosses": {
+          "question": "Can you tolerate significant short-term losses?",
+          "inputType": "boolean",
+          "next": {
+            "yes": "investmentLossPercentage",
+            "no": "preserveCapital"
+          },
+          "relevanceAdjustment": {
+            "yes": {
+              "HighRisk": 0.15
+            },
+            "no": {
+              "ModerateRisk": 0.1
+            }
+          }
+        },
+        "preserveCapital": {
+          "question": "Is preserving capital more important than high returns?",
+          "inputType": "boolean",
+          "next": "investmentLossPercentage",
+          "relevanceAdjustment": {
+            "yes": {
+              "LowRisk": 0.25
+            },
+            "no": {
+              "HighRisk": 0.1
+            }
+          }
+        },
+        "investmentLossPercentage": {
+          "question": "What percentage of your investment can you afford to lose?",
+          "inputType": "number",
+          "next": "preferredAssets",
+          "relevanceAdjustment": {
+            "0-10": {
+              "LowRisk": 0.2
+            },
+            "11-30": {
+              "ModerateRisk": 0.2
+            },
+            "31-100": {
+              "HighRisk": 0.2
+            }
+          }
+        },
+        "preferredAssets": {
+          "question": "Select your preferred type of assets:",
+          "inputType": "selection",
+          "options": [
+            "stocks",
+            "bonds",
+            "real estate",
+            "commodities",
+            "others"
+          ],
+          "next": {
+            "stocks": "experienceInStocks",
+            "bonds": "investmentHorizon",
+            "real estate": "investmentHorizon",
+            "commodities": "investmentHorizon",
+            "others": "investmentHorizon"
+          },
+          "relevanceAdjustment": {
+            "stocks": {
+              "HighRisk": 0.1
+            },
+            "bonds": {},
+            "real estate": {},
+            "commodities": {},
+            "others": {
+              "LowRisk": 0.1
+            }
+          }
+        },
+        "experienceInStocks": {
+          "question": "Do you have experience in stock trading?",
+          "inputType": "boolean",
+          "next": "investmentHorizon",
+          "relevanceAdjustment": {
+            "yes": {
+              "HighRisk": 0.1
+            },
+            "no": {
+              "LowRisk": 0.1
+            }
+          }
+        },
+        "investmentHorizon": {
+          "question": "What is your investment horizon in years?",
+          "inputType": "number",
+          "next": "taxBenefitsPreference",
+          "relevanceAdjustment": {
+            "5-10": {
+              "HighRisk": -0.1,
+              "LowRisk": 0.2
+            },
+            "1-5": {
+              "HighRisk": 0.2,
+              "LowRisk": -0.1
+            }
+          }
+        },
+        "taxBenefitsPreference": {
+          "question": "Do you prefer investments with tax benefits?",
+          "inputType": "boolean",
+          "next": "reviewFrequency",
+          "relevanceAdjustment": {
+            "yes": {
+              "ModerateRisk": 0.1,
+              "LowRisk": 0.1
+            },
+            "no": {
+              "HighRisk": 0.05
+            }
+          }
+        },
+        "investorAge": {
+          "question": "Your age is:",
+          "inputType": "number",
+          "next": "reviewFrequency",
+          "relevanceAdjustment": {
+            "<30": {
+              "HighRisk": 0.2
+            },
+            "30-50": {
+              "ModerateRisk": 0.2
+            },
+            ">50": {
+              "LowRisk": 0.2
+            }
+          }
+        },
+        "reviewFrequency": {
+          "question": "How often do you plan to review your investment portfolio?",
+          "inputType": "selection",
+          "options": [
+            "monthly",
+            "quarterly",
+            "annually",
+            "rarely"
+          ],
+          "relevanceAdjustment": {
+            "monthly": {
+              "HighRisk": 0.1
+            },
+            "rarely": {
+              "LowRisk": 0.1
+            },
+            "annually": {
+              "ModerateRisk": 0.1
+            },
+            "quarterly": {
+              "ModerateRisk": 0.05
+            }
+          }
+        }
+      },
+      "initialOutcomes": {
+        "HighRisk": 0,
+        "ModerateRisk": 0,
+        "LowRisk": 0
+      }
+    },
+    "GoalOriented": {
+      "initialQuestion": {
+        "question": "Are you saving for education?",
+        "inputType": "boolean",
+        "next": {
+          "yes": "targetAmount",
+          "no": "primaryGoalRetirement"
+        },
+        "relevanceAdjustment": {
+          "yes": {
+            "Education": 0.3
+          },
+          "no": {
+            "Education": -0.2
+          }
+        }
+      },
+      "questions": {
+        "primaryGoalRetirement": {
+          "question": "Is your primary goal retirement savings?",
+          "inputType": "boolean",
+          "next": {
+            "yes": "targetAmount",
+            "no": "buildingWealth"
+          },
+          "relevanceAdjustment": {
+            "yes": {
+              "Retirement": 0.3
+            },
+            "no": {
+              "Retirement": -0.2
+            }
+          }
+        },
+        "buildingWealth": {
+          "question": "Is building wealth your main objective?",
+          "inputType": "boolean",
+          "next": "targetAmount",
+          "relevanceAdjustment": {
+            "yes": {
+              "WealthBuilding": 0.3
+            },
+            "no": {
+              "WealthBuilding": -0.2
+            }
+          }
+        },
+        "targetAmount": {
+          "question": "What is your target amount?",
+          "inputType": "number",
+          "next": "timeToAchieveGoal",
+          "relevanceAdjustment": {
+            ">100000": {
+              "WealthBuilding": 0.2,
+              "Retirement": 0.1
+            },
+            "<=100000": {
+              "Education": 0.2
+            }
+          }
+        },
+        "timeToAchieveGoal": {
+          "question": "In how many years to achieve your goal?",
+          "inputType": "number",
+          "next": "reviewPortfolio",
+          "relevanceAdjustment": {
+            "<=5": {
+              "Education": 0.2,
+              "WealthBuilding": -0.1
+            },
+            ">6": {
+              "Retirement": 0.2,
+              "WealthBuilding": 0.1
+            }
+          }
+        },
+        "reviewPortfolio": {
+          "question": "Are you willing to periodically review and adjust your portfolio?",
+          "inputType": "boolean",
+          "next": "preferDiversified",
+          "relevanceAdjustment": {
+            "yes": {
+              "Retirement": 0.1,
+              "WealthBuilding": 0.1
+            },
+            "no": {
+              "Education": 0.1
+            }
+          }
+        },
+        "preferDiversified": {
+          "question": "Do you prefer a diversified portfolio?",
+          "inputType": "boolean",
+          "next": "annualIncomeAllocation",
+          "relevanceAdjustment": {
+            "yes": {
+              "Retirement": 0.2,
+              "WealthBuilding": 0.1
+            },
+            "no": {
+              "Education": -0.1
+            }
+          }
+        },
+        "annualIncomeAllocation": {
+          "question": "Annual income allocation percentage?",
+          "inputType": "number",
+          "next": "emergencyFund",
+          "relevanceAdjustment": {
+            "high": {
+              "WealthBuilding": 0.2,
+              "Retirement": 0.1
+            },
+            "low": {
+              "Education": 0.2
+            }
+          }
+        },
+        "emergencyFund": {
+          "question": "Do you have an emergency fund?",
+          "inputType": "boolean",
+          "next": "consideringLoans",
+          "relevanceAdjustment": {
+            "yes": {
+              "Retirement": 0.1,
+              "Education": 0.1
+            },
+            "no": {
+              "WealthBuilding": -0.1
+            }
+          }
+        },
+        "consideringLoans": {
+          "question": "Considering loans for investment goals?",
+          "inputType": "boolean",
+          "relevanceAdjustment": {
+            "yes": {
+              "Education": 0.2
+            },
+            "no": {
+              "Retirement": 0.1,
+              "WealthBuilding": 0.1
+            }
+          }
+        }
+      },
+      "initialOutcomes": {
+        "WealthBuilding": 0,
+        "Retirement": 0,
+        "Education": 0
+      }
+    },
+    "MarketTrend": {
+      "initialQuestion": {
+        "question": "Do you believe the market will predominantly rise in the near future?",
+        "inputType": "selection",
+        "options": [
+          "Bull",
+          "Bear",
+          "Neutral"
+        ],
+        "next": {
+          "Bull": "financialDerivativesComfort",
+          "Bear": "shortSellingFamiliarity",
+          "Neutral": "individualStocksOrMutualFunds"
+        },
+        "relevanceAdjustment": {
+          "Bull": {
+            "BullMarket": 0.3
+          },
+          "Bear": {
+            "BearMarket": 0.3
+          },
+          "Neutral": {
+            "NeutralMarket": 0.3
+          }
+        }
+      },
+      "questions": {
+        "financialDerivativesComfort": {
+          "question": "Are you comfortable with using financial derivatives?",
+          "inputType": "boolean",
+          "next": "activeOrPassiveInvestment",
+          "relevanceAdjustment": {
+            "yes": {
+              "BullMarket": 0.2
+            },
+            "no": {
+              "NeutralMarket": 0.1
+            }
+          }
+        },
+        "shortSellingFamiliarity": {
+          "question": "Are you familiar with short selling strategies?",
+          "inputType": "boolean",
+          "next": "individualStocksOrMutualFunds",
+          "relevanceAdjustment": {
+            "yes": {
+              "BearMarket": 0.2
+            },
+            "no": {
+              "NeutralMarket": 0.1
+            }
+          }
+        },
+        "activeOrPassiveInvestment": {
+          "question": "Do you prefer active or passive investment strategies?",
+          "inputType": "selection",
+          "options": [
+            "Active",
+            "Passive"
+          ],
+          "next": "individualStocksOrMutualFunds",
+          "relevanceAdjustment": {
+            "Active": {
+              "BullMarket": 0.2
+            },
+            "Passive": {
+              "NeutralMarket": 0.1
+            }
+          }
+        },
+        "individualStocksOrMutualFunds": {
+          "question": "Do you prefer to invest in individual stocks or mutual funds?",
+          "inputType": "selection",
+          "options": [
+            "Individual Stocks",
+            "Mutual Funds"
+          ],
+          "next": "indexFundsOrETFsInterest",
+          "relevanceAdjustment": {
+            "Individual Stocks": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            },
+            "Mutual Funds": {
+              "NeutralMarket": 0.2
+            }
+          }
+        },
+        "indexFundsOrETFsInterest": {
+          "question": "Are you interested in index funds or ETFs?",
+          "inputType": "boolean",
+          "next": "followMarketTrends",
+          "relevanceAdjustment": {
+            "yes": {
+              "NeutralMarket": 0.2
+            },
+            "no": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            }
+          }
+        },
+        "followMarketTrends": {
+          "question": "Do you follow market trends actively?",
+          "inputType": "boolean",
+          "next": "volatilityTolerance",
+          "relevanceAdjustment": {
+            "yes": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            },
+            "no": {
+              "NeutralMarket": 0.1
+            }
+          }
+        },
+        "volatilityTolerance": {
+          "question": "How much volatility can you withstand in your investment?",
+          "inputType": "selection",
+          "next": "sectorPreference",
+          "relevanceAdjustment": {
+            "high": {
+              "BullMarket": 0.2
+            },
+            "medium": {
+              "NeutralMarket": 0.1
+            },
+            "low": {
+              "BearMarket": 0.2
+            }
+          }
+        },
+        "sectorPreference": {
+          "question": "Do you have a preference for certain sectors or industries?",
+          "inputType": "boolean",
+          "next": "interestInInternationalMarkets",
+          "relevanceAdjustment": {
+            "yes": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            },
+            "no": {
+              "NeutralMarket": 0.1
+            }
+          }
+        },
+        "interestInInternationalMarkets": {
+          "question": "Rate your level of interest in international markets",
+          "inputType": "selection",
+          "options": [
+            "High",
+            "Moderate",
+            "Low",
+            "None"
+          ],
+          "next": "reviewInvestmentPortfolioFrequency",
+          "relevanceAdjustment": {
+            "High": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            },
+            "Moderate": {
+              "NeutralMarket": 0.1
+            },
+            "Low": {
+              "NeutralMarket": 0.1
+            },
+            "None": {
+              "NeutralMarket": 0.05
+            }
+          }
+        },
+        "reviewInvestmentPortfolioFrequency": {
+          "question": "How often do you plan to review your investment portfolio?",
+          "inputType": "selection",
+          "options": [
+            "Frequently",
+            "Occasionally",
+            "Rarely"
+          ],
+          "relevanceAdjustment": {
+            "Frequently": {
+              "BullMarket": 0.1,
+              "BearMarket": 0.1
+            },
+            "Occasionally": {
+              "NeutralMarket": 0.1
+            },
+            "Rarely": {
+              "NeutralMarket": 0.05
+            }
+          }
+        }
+      },
+      "initialOutcomes": {
+        "BullMarket": 0,
+        "BearMarket": 0,
+        "NeutralMarket": 0
+      }
+    }
+  }
+}
