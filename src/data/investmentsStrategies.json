@@ -461,9 +461,9 @@
           "inputType": "selection",
           "next": "sectorPreference",
           "options": [
-            "High",
-            "Medium",
-            "Low"
+            "high",
+            "medium",
+            "low"
           ],
           "relevanceAdjustment": {
             "high": {
