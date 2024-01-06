@@ -460,6 +460,11 @@
           "question": "How much volatility can you withstand in your investment?",
           "inputType": "selection",
           "next": "sectorPreference",
+          "options": [
+            "High",
+            "Medium",
+            "Low"
+          ],
           "relevanceAdjustment": {
             "high": {
               "BullMarket": 0.2
